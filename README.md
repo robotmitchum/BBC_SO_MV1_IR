@@ -91,11 +91,11 @@ Then from Reaper, I rendered "Sweep" and "Sweep Reverb" using the region matrix 
 From a 8 seconds sweep, I render 11 seconds because I estimated that the reverberation was no longer than 3 seconds.
 
 The project sampling rate is 48 Khz.
-By trying with 96 Khz, I found that the original IR used in BBC SO is very likely not more than this since
+By trying with 96 Khz, I found that the original IR used in BBC SO is very likely not more than 48 Khz since
 I only get aliasing with frequency reflection typical of a resampling algorithm, but feel free to verify this and do tell me what you think.
 
 * The last track "Sweep ReaVerb" is just an audio send from the first track "Sweep" with an instance of "ReaVerb" which is the built-in convolution effect of Reaper.
-*This is used to test the resulting deconvolved IR and verify that it is 'close enough' from the desired outcome. 
+This is used to test the resulting deconvolved IR and verify that it is 'close enough' from the desired outcome. 
 
 ### Deconvolution 
 
