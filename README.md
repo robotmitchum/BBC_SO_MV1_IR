@@ -19,18 +19,18 @@ Alas, this IR is in a proprietary format which is not exploitable by other convo
 
 ![Alt Text](screencaps/BBC_SO_Core_IR_files.png "BBC SO Core IR files")
 
-
-This document describes a simple method to reconstruct an IR by approximating a frequency sweep then by using deconvolution.
+This document describes a simple method to reconstruct an IR by approximating a frequency sweep then by using
+deconvolution.
 
 I am using the BBC SO "Core" edition as an example because this is the licence I own.
 But I do think the very same method is probably applicable to the free "Discover" edition.
-
 
 ## Content of the directory
 
 * "BBC_SO_MV1_IR_w001.rpp" is the Reaper 7 project I created to produce all the example audio files.
   But you can probably do the exact same thing with any other DAW using the method described in this document.
 
+### V1
 
 * "Sweep.wav" is a frequency sweep simulated with the BBC SO flute long articulation played "dry" (default setting)
   This sample is used as a reference tone when deconvolving
@@ -51,7 +51,8 @@ These files are directly usable if you don't want to bother with all this proces
 I created 2 tracks with one instance of the BBC SO solo flute for each.
 
 I am using the flute because it is the instrument which is the closest to a sine wave and gives the best results to me.
-However, I was also able to get similar, coherent and almost as good results with the solo violin, so feel free to experiment and improve on this.
+However, I was also able to get similar, coherent and almost as good results with the solo violin, so feel free to
+experiment and improve on this.
 
 * The "Sweep" track is the solo flute long played dry (reverb at 0%) with disabled vibrato for good measure.
 
@@ -62,7 +63,8 @@ If you think playing overlapping notes or frequencies is "wrong", watch this vid
 
 This was enlightening to me and I found that this improves the results considerably.
 
-I am using CC11 (Expression) to approximate a Tukey window. This is to eliminate any potential pop or noise at the beginning and at the end.
+I am using CC11 (Expression) to approximate a Tukey window. This is to eliminate any potential pop or noise at the
+beginning and at the end.
 
 ![Alt Text](screencaps/piano_roll.png "Piano Roll with expression")
 
@@ -82,7 +84,7 @@ This gives a linear and not a logarithmic sweep but, it works just fine.
 IR deconvolution is a much more tolerant process that you might think.
 
 * The "Sweep Reverb" track is a basically a duplicate track where I only set the reverb at 100%
-(In Reaper, I am sending the MIDI, so I am sure this is playing exactly the same thing)
+  (In Reaper, I am sending the MIDI, so I am sure this is playing exactly the same thing)
 
 ![Alt Text](screencaps/BBC_SO_sweep_reverb.png "Sweep Reverb settings")
 
@@ -92,12 +94,29 @@ From a 8 seconds sweep, I render 11 seconds because I estimated that the reverbe
 
 The project sampling rate is 48 Khz.
 By trying with 96 Khz, I found that the original IR used in BBC SO is very likely not more than 48 Khz since
-I only get aliasing with frequency reflection typical of a resampling algorithm, but feel free to verify this and do tell me what you think.
+I only get aliasing with frequency reflection typical of a resampling algorithm, but feel free to verify this and do
+tell me what you think.
 
-* The last track "Sweep ReaVerb" is just an audio send from the first track "Sweep" with an instance of "ReaVerb" which is the built-in convolution effect of Reaper.
-This is used to test the resulting deconvolved IR and verify that it is 'close enough' from the desired outcome. 
+* The last track "Sweep ReaVerb" is just an audio send from the first track "Sweep" with an instance of "ReaVerb" which
+  is the built-in convolution effect of Reaper.
+  This is used to test the resulting deconvolved IR and verify that it is 'close enough' from the desired outcome.
 
-### Deconvolution 
+### V2
+
+After noticing the BBC SO reverb knob is NOT a dry / wet mix but a reverb mix only instead, I modified the setup
+to subtract "Sweep" from "Sweep Reverb".
+This is likely more correct even if the result seems only marginally different.
+
+* "BBC_SO_MV1_IR_V2_w001.rpp" : Reaper 7 project to produce all the V2 example audio files
+
+
+* "Sweep_V2.wav" : frequency sweep from Reaper project V2
+* "Sweep Reverb_V2.wav" : "wet" sweep from Reaper project V2 ("Sweep" subtracted by phase inversion)
+
+
+* "BBC_SO_MV1_IR_V2_comp+12dB.flac" : Reconstructed IR V2 with compensated gain and finally amplified by +12dB
+
+### Deconvolution
 
 Finally, I deconvolve "Sweep Reverb.wav" using "Sweep.wav" as a reference tone.
 
@@ -105,6 +124,11 @@ I used my own tool IR Tool which is available for free on my github right here :
 
 [IR Tool, python sources and info](https://github.com/robotmitchum/ir_tool)
 
-[IR Tool v1.0.3 windows x64 executable](https://github.com/robotmitchum/ir_tool/releases/tag/v1.0.3)
+[IR Tool v1.1.3 windows x64 executable](https://github.com/robotmitchum/ir_tool/releases/tag/v1.1.3)
 
 But you can use any other tool to do the very same process, Reaper has a builtin deconvolution tool for example.
+
+## Conclusion
+
+Resulting IR seems to exhibit a non-negligible pre-delay (about 62 ms).
+This seems coherent with the effect result within the BBC SO plugin though.
