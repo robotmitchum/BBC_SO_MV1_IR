@@ -124,7 +124,7 @@ I used my own tool IR Tool which is available for free on my github right here :
 
 [IR Tool, python sources and info](https://github.com/robotmitchum/ir_tool)
 
-[IR Tool v1.1.3 windows x64 executable](https://github.com/robotmitchum/ir_tool/releases/tag/v1.1.3)
+[IR Tool v1.1.6 windows x64 executable](https://github.com/robotmitchum/ir_tool/releases/tag/v1.1.6)
 
 But you can use any other tool to do the very same process, Reaper has a builtin deconvolution tool for example.
 
